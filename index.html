@@ -36,6 +36,13 @@
             <p>© 2025 - TPI Programación III</p>
         </div>
     </footer>
+    <script src="js/api.js"></script>
+    <script>
+        // prueba rápida
+        api.apiGetCourses()
+            .then(c => console.log('Cursos:', c))
+            .catch(e => console.error(e));
+    </script>
 
 </body>
 </html>
