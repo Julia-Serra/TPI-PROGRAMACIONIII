@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Gestión de Cursos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <h1>Panel de Administración</h1>
+        <nav class="menu">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" id="logoutBtn" class="logout">Cerrar sesión</a>
+        </nav>
+    </header>
+
+    <main class="admin-page">
+
+        <!-- Crear usuario -->
+        <section class="card">
+            <h2>Crear Usuario</h2>
+
+            <form id="adminCreateUser" class="form">
+
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" id="adminNombre" required placeholder="Nombre completo">
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="adminEmail" required placeholder="email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="adminPassword" required placeholder="••••••••">
+                </div>
+
+                <div class="form-group">
+                    <label>Rol</label>
+                    <select id="adminRol" required>
+                        <option value="ADMIN">Admin</option>
+                        <option value="USER">Usuario</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">Crear usuario</button>
+            </form>
+        </section>
+
+        <!-- Lista de usuarios -->
+        <section class="card">
+            <h2>Lista de Usuarios</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="userTableBody">
+                    <!-- JS insertará usuarios desde MockAPI -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 - TPI Programación III</p>
+    </footer>
+</body>
+</html>
