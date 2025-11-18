@@ -14,37 +14,96 @@
 
 <body>
 
-    <!-- HEADER -->
+    <!-- NAVBAR -->
     <header class="bg-white shadow-sm py-3">
         <div class="container d-flex justify-content-between align-items-center">
-            <h1 class="fs-3 fw-bold m-0 text-dark">Gestión de Cursos</h1>
 
-            <nav class="d-flex gap-3">
-                <a href="login.html" class="text-dark text-decoration-none fw-semibold">Iniciar Sesión</a>
+            <h1 class="fs-3 fw-bold m-0 text-dark">FirstCode</h1>
 
-                <a href="register.html" class="btn btn-primary">
-                    Registrarse
+            <nav class="d-flex gap-3 align-items-center">
+                <a href="#" class="text-dark text-decoration-none fw-semibold">Inicio</a>
+                <a href="#" class="text-dark text-decoration-none fw-semibold">Cursos</a>
+                <a href="#" class="text-dark text-decoration-none fw-semibold">Instructores</a>
+                <a href="#" class="text-dark text-decoration-none fw-semibold">Precios</a>
+                <a href="#" class="text-dark text-decoration-none fw-semibold">Blog</a>
+
+                <a href="login.html" class="btn btn-primary">
+                    Iniciar Sesión
                 </a>
             </nav>
+
         </div>
     </header>
 
-    <!-- HERO PRINCIPAL -->
-    <main>
-        <section class="py-5 text-center">
-            <div class="container">
-                <h2 class="fw-bold mb-3">Bienvenido al sistema de gestión de cursos</h2>
+    <!-- HERO -->
+    <section class="py-5 text-center">
+        <div class="container">
 
-                <p class="mb-4 text-secondary">
-                    Administrá tus cursos, inscripciones y usuarios de forma rápida y sencilla.
-                </p>
+            <h2 class="fw-bold mb-3">
+                Domina la Programación.<br>
+                Transforma tu Futuro
+            </h2>
 
-                <a href="login.html" class="btn btn-primary btn-lg">
-                    Comenzar
-                </a>
+            <p class="mb-4 text-secondary">
+                Aprende con expertos. Obtén certificación.<br>
+                Encuentra tu primer empleo Tech.
+            </p>
+
+            <a href="#" class="btn btn-primary btn-lg">
+                Explorar Cursos
+            </a>
+
+        </div>
+    </section>
+
+    <!-- CURSOS DESTACADOS -->
+    <section class="py-5">
+        <div class="container">
+
+            <h3 class="fw-bold text-center mb-4">Cursos Destacados</h3>
+
+            <div class="row g-4">
+
+                <div class="col-md-3">
+                    <div class="border p-3 rounded">
+                        <h5>Desarrollo Web Full-Stack</h5>
+                        <p class="text-secondary small">Nivel inicial</p>
+                        <p class="small">Duración: 10 semanas</p>
+                        <p>⭐ ⭐ ⭐ ⭐ ⭐</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="border p-3 rounded">
+                        <h5>Data Science con Python</h5>
+                        <p class="text-secondary small">Nivel intermedio</p>
+                        <p class="small">Duración: 12 semanas</p>
+                        <p>⭐ ⭐ ⭐ ⭐ ⭐</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="border p-3 rounded">
+                        <h5>Dev. Avanzada en IA</h5>
+                        <p class="text-secondary small">Nivel avanzado</p>
+                        <p class="small">Duración: 8 semanas</p>
+                        <p>⭐ ⭐ ⭐ ⭐ ⭐</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="border p-3 rounded">
+                        <h5>Especialista en IA</h5>
+                        <p class="text-secondary small">Nivel experto</p>
+                        <p class="small">Duración: 16 semanas</p>
+                        <p>⭐ ⭐ ⭐ ⭐ ⭐</p>
+                    </div>
+                </div>
+
             </div>
-        </section>
-    </main>
+
+        </div>
+    </section>
 
     <!-- FOOTER -->
     <footer class="text-center bg-white text-secondary py-3 mt-5">
@@ -54,7 +113,6 @@
     <!-- Scripts -->
     <script src="js/api.js"></script>
     <script>
-        // prueba rápida
         api.apiGetCourses()
             .then(c => console.log('Cursos:', c))
             .catch(e => console.error(e));
