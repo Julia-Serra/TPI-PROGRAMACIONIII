@@ -5,25 +5,25 @@ const instructores = [
         nombre: "Bill Gates",
         curso: "HTML & CSS - Desarrollo Web Inicial",
         foto: "https://cdn.britannica.com/47/188747-050-1D34E743/Bill-Gates-2011.jpg?w=385",
-        descripcion: "Experto en JavaScript, React y Node.js."
+        descripcion: "Objetivo: Aprender a combinar HTML Y CSS para construir sitios web funcionales y con diseños responsivos "
     },
     {
         nombre: "Steve Jobs",
         curso: "JavaScript Desde Cero",
         foto: "https://i.pinimg.com/564x/5f/9e/d1/5f9ed156d800931fd1a515b629e500bc.jpg",
-        descripcion: "Analista de datos senior con 12 años de experiencia."
+        descripcion: "Objetivo: Crear funcionalidad dinámica e interactiva en la web."
     },
     {
         nombre: "Alan Turing",
         curso: "Phyton para Principiantes",
         foto: "https://www.elcorreo.com/xlsemanal/wp-content/uploads/sites/5/2023/04/alan-turing-inventor-informatica-espia-codigo-enigma-segunda-guerra-mundial.jpg",
-        descripcion: "Investigador en Inteligencia Artificial y redes neuronales."
+        descripcion: "Objetivo: Proporcionar una base sólida en la sintaxis y los fundamentos de la programación"
     },
      {
         nombre: "Elon Musk",
         curso: "Git & GitHub - Control de Versiones ",
         foto: "https://futureoflife.org/wp-content/uploads/2020/08/elon_musk_royal_society.jpg",
-        descripcion: "Investigador en Inteligencia Artificial y redes neuronales."
+        descripcion: "Objetivo: Adquirir las habilidades necesarias para integrarse en un equipo de desarrollo profesional, gestionando el código de forma segura, ordenada y colaborativa."
     },
 
 ];
