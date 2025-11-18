@@ -1,5 +1,7 @@
-// Manejo del login
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
+// ===============
+// LOGIN
+// ===============
+document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const email = document.getElementById("email").value.trim();
@@ -14,14 +16,14 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
             return;
         }
 
-        // GUARDAR usuario en localStorage con un nombre unificado:
+        // Guardamos el usuario logueado en localStorage (UNIFICADO)
         localStorage.setItem("user", JSON.stringify(user));
 
-        // 🔥 Redirigir según el rol
+        // Redirección según rol
         if (user.rol === "ADMIN") {
-            window.location.href = "dashboard.html";   // SOLO ADMIN
+            window.location.href = "dashboard.html";
         } else {
-            window.location.href = "index.html";        // USUARIO COMÚN
+            window.location.href = "index.html";
         }
 
     } catch (err) {
@@ -29,3 +31,11 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         alert("Error al iniciar sesión");
     }
 });
+
+// ===============
+// LOGOUT
+// ===============
+function logout() {
+    localStorage.removeItem("user");
+    window.location.href = "index.html";
+}
