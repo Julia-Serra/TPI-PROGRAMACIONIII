@@ -1,0 +1,6 @@
+.dashboard-box {
+    padding: 25px;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
