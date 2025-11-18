@@ -2,13 +2,13 @@
     PALETA DE COLORES PRINCIPAL
    ================================ */
 :root {
-    --primary: #3b82f6;      /* Azul moderno */
-    --primary-dark: #1d4ed8;
-    --secondary: #6b7280;    /* Gris medio */
-    --background: #f3f4f6;   /* Fondo gris claro */
-    --white: #ffffff;
-    --text: #111827;
-    --card-bg: #ffffff;
+    --primary: #c061ff;      /* color boton */
+    --primary-dark: #9400FF; /* color click boton */
+    --secondary: #A848C6;    /* -*/
+    --background: #0b0033;   /* Fondo */
+    --white: #2f2c79; /* recuadro */
+    --text: #ffffff;
+    --card-bg: #120044;
 }
 
 /* ================================
@@ -155,4 +155,5 @@ footer {
     .dashboard-box {
         margin-bottom: 20px;
     }
+
 }
