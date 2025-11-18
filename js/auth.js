@@ -14,14 +14,14 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
             return;
         }
 
-        // Guardamos el usuario logueado en localStorage
-        localStorage.setItem("usuarioLogueado", JSON.stringify(user));
+        // GUARDAR usuario en localStorage con un nombre unificado:
+        localStorage.setItem("user", JSON.stringify(user));
 
-        // Redirigimos según el rol
+        // 🔥 Redirigir según el rol
         if (user.rol === "ADMIN") {
-            window.location.href = "admin.html";
+            window.location.href = "dashboard.html";   // SOLO ADMIN
         } else {
-            window.location.href = "dashboard.html";
+            window.location.href = "index.html";        // USUARIO COMÚN
         }
 
     } catch (err) {
