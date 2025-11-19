@@ -1,8 +1,7 @@
 // navbar.js
 
 document.addEventListener("DOMContentLoaded", () => {
-    const user = JSON.parse(localStorage.getItem("usuarioLogueado"));
-
+    const user = JSON.parse(localStorage.getItem("user"));
     const adminLinks = document.querySelectorAll(".nav-admin");
     const userLinks = document.querySelectorAll(".nav-user");
     const guestLinks = document.querySelectorAll(".nav-guest");

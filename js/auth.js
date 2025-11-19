@@ -23,7 +23,7 @@ document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
         if (user.rol === "ADMIN") {
             window.location.href = "dashboard.html";
         } else {
-            window.location.href = "index.html";
+            window.location.href = "user-home.html";
         }
 
     } catch (err) {
