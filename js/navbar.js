@@ -25,3 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
         guestLinks.forEach(l => l.style.display = "none");
     }
 });
+
+// =============================
+// FUNCIÓN GLOBAL DE LOGOUT
+// =============================
+function logout() {
+    localStorage.removeItem("user");
+    window.location.href = "login.html";
+}
+
+// Hacerla accesible desde el HTML
+window.logout = logout;

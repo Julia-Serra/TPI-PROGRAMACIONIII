@@ -7,7 +7,7 @@
     --secondary: #A848C6;    /* -*/
     --background: #0b0033;   /* Fondo */
     --white: #2f2c79; /* recuadro */
-    --text: #ffffff;
+    --text: #ffffff; /* texto titutlo */
     --card-bg: #120044;
 }
 
@@ -71,8 +71,8 @@ h1, h2, h3, h4 {
 .card {
     border: none;
     border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    background-color: var(--card-bg);
+    box-shadow: 0 3px 10px #8a00ff;
+    background-color: #c061ff;
 }
 
 .card-title {
@@ -141,7 +141,7 @@ footer {
     padding: 18px;
     background: var(--white);
     text-align: center;
-    color: var(--secondary);
+    color: #ffff;
 }
 
 /* ================================

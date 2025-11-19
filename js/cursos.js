@@ -128,7 +128,7 @@ const CursosApp = (function(){
     }
 
     /* ------------------------------
-      SISTEMA DE INSCRIPCIÓN
+        SISTEMA DE INSCRIPCIÓN
     -------------------------------*/
 
     function getUserData() {
@@ -196,8 +196,8 @@ const CursosApp = (function(){
     }
 
     /* ------------
-      FIX IMPORTANTE:
-      Esta función DEBE estar arriba de renderCourseDetail()
+        FIX IMPORTANTE:
+        Esta función DEBE estar arriba de renderCourseDetail()
     --------------*/
     function botonInscribirmeHTML(courseId) {
         return user
@@ -206,7 +206,7 @@ const CursosApp = (function(){
     }
 
     /* ------------------------------
-      RENDER LISTA
+        RENDER LISTA
     -------------------------------*/
     function renderCoursesList(container) {
         container.innerHTML = '';
@@ -230,7 +230,7 @@ const CursosApp = (function(){
     }
 
     /* ------------------------------
-      RENDER DETALLE
+        RENDER DETALLE
     -------------------------------*/
     function renderCourseDetail(courseId) {
         const c = cursos.find(x => x.id === courseId);
@@ -265,7 +265,6 @@ const CursosApp = (function(){
             </div>
         `;
     }
-
     /* ------------------------------ */
     function initCoursePage() {
         const hash = location.hash ? location.hash.replace('#','') : '';
