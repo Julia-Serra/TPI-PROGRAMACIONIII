@@ -1,10 +1,13 @@
 // =======================
 // PROTECCIÓN DE RUTA
 // =======================
-const user = JSON.parse(localStorage.getItem("user"));
+import { requireUser } from "./protect.js";
 
-if (!user || user.rol !== "USER") {
-    window.location.href = "login.html";
+// Obtenemos el usuario y validamos que sea un usuario normal
+const user = requireUser();
+if (!user) {
+    // requireUser ya redirige al login si no es usuario
+    throw new Error("No autorizado");
 }
 
 // =======================
@@ -17,12 +20,12 @@ document.getElementById("userEmail").textContent = user.email;
 // CARGAR DATOS DEL USUARIO DESDE MOCKAPI
 // =======================
 
-// Traer inscripciones del usuario
+// Traer todas las inscripciones y filtrar por usuario
 async function cargarInscripciones() {
     const cont = document.getElementById("inscripcionesList");
     cont.innerHTML = "Cargando...";
 
-    const inscripciones = await api.apiGet(`inscripciones?userId=${user.id}`);
+    const inscripciones = (await api.apiGetEnrollments()).filter(i => i.userId === user.id);
 
     cont.innerHTML = "";
 
@@ -49,9 +52,9 @@ async function cargarInscripciones() {
 async function desinscribirse(id) {
     if (!confirm("¿Seguro que deseas cancelar esta inscripción?")) return;
 
-    await api.apiDelete(`inscripciones/${id}`);
-    cargarInscripciones();
-    cargarCursosProgreso();
+    await api.apiDeleteEnrollment(id); // 🔹 agregar en api.js
+    await cargarInscripciones();
+    await cargarCursosProgreso();
 }
 
 // =======================
@@ -60,8 +63,9 @@ async function desinscribirse(id) {
 async function cargarCursosProgreso() {
     const cont = document.getElementById("cursosProgreso");
     cont.innerHTML = "Cargando...";
-    
-    const cursos = await api.apiGet(`inscripciones?userId=${user.id}&estado=EN_PROGRESO`);
+
+    const cursos = (await api.apiGetEnrollments())
+        .filter(i => i.userId === user.id && i.estado === "EN_PROGRESO");
 
     cont.innerHTML = "";
 
@@ -86,13 +90,10 @@ async function cargarCursosProgreso() {
 
 // Marcar curso como finalizado
 async function marcarFinalizado(id) {
-    await api.apiPut(`inscripciones/${id}`, {
-        estado: "FINALIZADO",
-        progreso: 100
-    });
+    await api.apiUpdateEnrollment(id, { estado: "FINALIZADO", progreso: 100 });
 
-    cargarCursosProgreso();
-    cargarCursosFinalizados();
+    await cargarCursosProgreso();
+    await cargarCursosFinalizados();
 }
 
 // =======================
@@ -101,8 +102,9 @@ async function marcarFinalizado(id) {
 async function cargarCursosFinalizados() {
     const cont = document.getElementById("cursosFinalizados");
     cont.innerHTML = "Cargando...";
-    
-    const cursos = await api.apiGet(`inscripciones?userId=${user.id}&estado=FINALIZADO`);
+
+    const cursos = (await api.apiGetEnrollments())
+        .filter(i => i.userId === user.id && i.estado === "FINALIZADO");
 
     cont.innerHTML = "";
 
@@ -127,6 +129,8 @@ async function cargarCursosFinalizados() {
 // =======================
 // INICIALIZAR TODO
 // =======================
-cargarInscripciones();
-cargarCursosProgreso();
-cargarCursosFinalizados();
+(async () => {
+    await cargarInscripciones();
+    await cargarCursosProgreso();
+    await cargarCursosFinalizados();
+})();

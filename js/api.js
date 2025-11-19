@@ -80,6 +80,9 @@ async function apiUpdateEnrollment(id, data) {
     body: JSON.stringify(data)
   });
 }
+async function apiDeleteEnrollment(id) {
+    return request(`${ENROLL_URL}/enrollments/${id}`, { method: 'DELETE' });
+}
 
 /* Opcional: exponer en window si no usás módulos */
 window.api = {
@@ -90,5 +93,6 @@ window.api = {
   apiCreateCourse,
   apiGetEnrollments,
   apiCreateEnrollment,
-  apiUpdateEnrollment
+  apiUpdateEnrollment,
+  apiDeleteEnrollment
 };

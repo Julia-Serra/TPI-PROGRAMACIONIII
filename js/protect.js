@@ -1,5 +1,3 @@
-// protect.js
-
 // Verifica si hay sesión iniciada
 export function requireLogin() {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -11,14 +9,25 @@ export function requireLogin() {
     return user;
 }
 
+// Función para detectar dinámicamente el rol
+function detectRol(user) {
+    if (!user) return null;
+    if (user.rol) return user.rol.toUpperCase();
+    if (user.role) return user.role.toUpperCase();
+    if (user.tipo) return user.tipo.toUpperCase();
+    return null;
+}
+
 // Protege la página de admins
 export function requireAdmin() {
     const user = requireLogin();
-    if (!user) return;
+    if (!user) return null;
 
-    if (user.rol?.toUpperCase() !== "ADMIN") {
+    const rol = detectRol(user);
+
+    if (rol !== "ADMIN") {
         alert("Acceso denegado");
-        window.location.href = "login.html"; // usuarios normales o intrusos vuelven al login
+        window.location.href = "login.html";
         return null;
     }
     return user;
@@ -27,11 +36,13 @@ export function requireAdmin() {
 // Protege la página de usuarios normales
 export function requireUser() {
     const user = requireLogin();
-    if (!user) return;
+    if (!user) return null;
 
-    if (user.rol?.toUpperCase() !== "USUARIO") {
+    const rol = detectRol(user);
+
+    if (rol !== "USER" && rol !== "USUARIO") {
         alert("Acceso denegado");
-        window.location.href = "login.html"; // admins o intrusos vuelven al login
+        window.location.href = "login.html";
         return null;
     }
     return user;
