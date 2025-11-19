@@ -75,5 +75,9 @@
     <script src="./js/api.js"></script>
     <script src="./js/navbar.js"></script>
     <script src="./js/user-home.js"></script>
+    <script type="module">
+    import { requireAdmin } from './js/protect.js';
+    requireAdmin();
+    </script>
 </body>
 </html>

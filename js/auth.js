@@ -21,9 +21,12 @@ document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
 
         // Redirección según rol
         if (user.rol === "ADMIN") {
-            window.location.href = "dashboard.html";
+            window.location.href = "admin.html";
+        } else if (user.rol?.toUpperCase() === "USUARIO") {
+            window.location.href = "user-home.html"; // pantalla exclusiva para usuarios normales
         } else {
-            window.location.href = "user-home.html";
+            alert("Rol desconocido. Contacte al administrador.");
+            window.location.href = "login.html";
         }
 
     } catch (err) {
