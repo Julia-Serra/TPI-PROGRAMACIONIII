@@ -96,3 +96,7 @@ footer {
     margin-top: 40px;
     color: #777;
 }
+.btn-danger {
+    background-color: #dc3545 !important;
+    color: white !important;
+}
