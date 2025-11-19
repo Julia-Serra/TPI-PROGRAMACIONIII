@@ -1,132 +1,132 @@
-// Leer usuario
+// =======================
+// PROTECCIÓN DE RUTA
+// =======================
 const user = JSON.parse(localStorage.getItem("user"));
 
-// Si no hay usuario → volver al login
-if (!user) {
+if (!user || user.rol !== "USER") {
     window.location.href = "login.html";
 }
 
-// Mostrar nombre
-document.getElementById("userName").textContent = `Bienvenido/a ${user.nombre} 👋`;
+// =======================
+// MOSTRAR INFO DEL USUARIO
+// =======================
+document.getElementById("userName").textContent = user.nombre;
+document.getElementById("userEmail").textContent = user.email;
 
+// =======================
+// CARGAR DATOS DEL USUARIO DESDE MOCKAPI
+// =======================
 
-// =======================================
-// Cargar cursos desde tu mockAPI
-// =======================================
+// Traer inscripciones del usuario
+async function cargarInscripciones() {
+    const cont = document.getElementById("inscripcionesList");
+    cont.innerHTML = "Cargando...";
 
-async function cargarCursos() {
-    try {
-        const res = await fetch("https://XXXXXX.mockapi.io/cursos");
-        const cursos = await res.json();
+    const inscripciones = await api.apiGet(`inscripciones?userId=${user.id}`);
 
-        mostrarCursos(cursos);
-    } catch (error) {
-        console.error("Error al cargar cursos:", error);
-    }
-}
+    cont.innerHTML = "";
 
-// =======================================
-// Mostrar cursos según estado
-// =======================================
-
-function mostrarCursos(cursos) {
-    const inscriptosDiv   = document.getElementById("inscriptos");
-    const progresoDiv     = document.getElementById("progreso");
-    const finalizadosDiv  = document.getElementById("finalizados");
-
-    inscriptosDiv.innerHTML = "";
-    progresoDiv.innerHTML = "";
-    finalizadosDiv.innerHTML = "";
-
-    // Filtrar según arrays del usuario
-    const listaInscriptos  = cursos.filter(c => user.inscripciones?.includes(c.id));
-    const listaProgreso    = cursos.filter(c => user.enProgreso?.includes(c.id));
-    const listaFinalizados = cursos.filter(c => user.finalizados?.includes(c.id));
-
-    renderLista(listaInscriptos, inscriptosDiv, "inscripto");
-    renderLista(listaProgreso, progresoDiv, "progreso");
-    renderLista(listaFinalizados, finalizadosDiv, "finalizado");
-}
-
-// =======================================
-// Renderizar tarjetas
-// =======================================
-
-function renderLista(lista, contenedor, tipo) {
-    if (!lista || lista.length === 0) {
-        contenedor.innerHTML = `<p class="text-secondary">No hay cursos en esta sección.</p>`;
+    if (inscripciones.length === 0) {
+        cont.innerHTML = "<p>No tenés inscripciones aún.</p>";
         return;
     }
 
-    lista.forEach(curso => {
-        contenedor.innerHTML += `
-            <div class="border rounded p-3 mb-3">
-                <h5>${curso.nombre}</h5>
-                <p class="small text-secondary">${curso.descripcion}</p>
+    inscripciones.forEach(i => {
+        const item = document.createElement("div");
+        item.classList.add("list-group-item");
 
-                <div class="d-flex gap-2 mt-2">
-                    <a href="curso-detalle.html?id=${curso.id}" class="btn btn-sm btn-outline-primary">Ver detalle</a>
-                    
-                    ${tipo === "inscripto" ? 
-                        `<button class="btn btn-sm btn-danger" onclick="desinscribir(${curso.id})">Desinscribirse</button>` 
-                    : ""}
-
-                    ${tipo === "progreso" ? 
-                        `<button class="btn btn-sm btn-success" onclick="marcarFinalizado(${curso.id})">Marcar como finalizado</button>` 
-                    : ""}
-
-                    ${tipo === "finalizado" ? 
-                        `<button class="btn btn-sm btn-secondary">Ver certificado</button>` 
-                    : ""}
-                </div>
-            </div>
+        item.innerHTML = `
+            <strong>${i.nombreCurso}</strong><br>
+            Estado: ${i.estado}<br>
+            <button class="btn btn-danger btn-sm mt-2" onclick="desinscribirse('${i.id}')">Cancelar inscripción</button>
         `;
+
+        cont.appendChild(item);
     });
 }
 
-// =======================================
-// Funciones de acción del usuario
-// =======================================
+// Cancelar inscripción
+async function desinscribirse(id) {
+    if (!confirm("¿Seguro que deseas cancelar esta inscripción?")) return;
 
-async function desinscribir(idCurso) {
-    user.inscripciones = user.inscripciones.filter(id => id !== idCurso);
-    guardarUser();
+    await api.apiDelete(`inscripciones/${id}`);
+    cargarInscripciones();
+    cargarCursosProgreso();
 }
 
-async function marcarFinalizado(idCurso) {
-    user.enProgreso = user.enProgreso.filter(id => id !== idCurso);
-    user.finalizados.push(idCurso);
-    guardarUser();
+// =======================
+// CURSOS EN PROGRESO
+// =======================
+async function cargarCursosProgreso() {
+    const cont = document.getElementById("cursosProgreso");
+    cont.innerHTML = "Cargando...";
+    
+    const cursos = await api.apiGet(`inscripciones?userId=${user.id}&estado=EN_PROGRESO`);
+
+    cont.innerHTML = "";
+
+    if (cursos.length === 0) {
+        cont.innerHTML = "<p>No tenés cursos en progreso.</p>";
+        return;
+    }
+
+    cursos.forEach(c => {
+        const item = document.createElement("div");
+        item.classList.add("list-group-item");
+
+        item.innerHTML = `
+            <strong>${c.nombreCurso}</strong><br>
+            Avance: ${c.progreso || 0}%<br>
+            <button class="btn btn-success btn-sm mt-2" onclick="marcarFinalizado('${c.id}')">Marcar como finalizado</button>
+        `;
+
+        cont.appendChild(item);
+    });
 }
 
-// Guardar cambios en MockAPI y localStorage
-async function guardarUser() {
-    await fetch(`https://XXXXXX.mockapi.io/users/${user.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user)
+// Marcar curso como finalizado
+async function marcarFinalizado(id) {
+    await api.apiPut(`inscripciones/${id}`, {
+        estado: "FINALIZADO",
+        progreso: 100
     });
 
-    localStorage.setItem("user", JSON.stringify(user));
-    cargarCursos();
+    cargarCursosProgreso();
+    cargarCursosFinalizados();
 }
 
-// =======================================
-// Tabs
-// =======================================
+// =======================
+// CURSOS FINALIZADOS
+// =======================
+async function cargarCursosFinalizados() {
+    const cont = document.getElementById("cursosFinalizados");
+    cont.innerHTML = "Cargando...";
+    
+    const cursos = await api.apiGet(`inscripciones?userId=${user.id}&estado=FINALIZADO`);
 
-document.querySelectorAll("#cursoTabs .nav-link").forEach(btn => {
-    btn.addEventListener("click", () => {
-        document.querySelectorAll("#cursoTabs .nav-link").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
+    cont.innerHTML = "";
 
-        const section = btn.dataset.section;
+    if (cursos.length === 0) {
+        cont.innerHTML = "<p>No tenés cursos finalizados.</p>";
+        return;
+    }
 
-        document.querySelectorAll(".curso-section").forEach(s => s.classList.add("d-none"));
-        document.getElementById(section).classList.remove("d-none");
+    cursos.forEach(c => {
+        const item = document.createElement("div");
+        item.classList.add("list-group-item");
+
+        item.innerHTML = `
+            <strong>${c.nombreCurso}</strong><br>
+            COMPLETADO ✔
+        `;
+
+        cont.appendChild(item);
     });
-});
+}
 
-
-// Inicializar
-cargarCursos();
+// =======================
+// INICIALIZAR TODO
+// =======================
+cargarInscripciones();
+cargarCursosProgreso();
+cargarCursosFinalizados();
