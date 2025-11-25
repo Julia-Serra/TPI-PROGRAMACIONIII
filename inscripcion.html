@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inscripción al Curso</title>
+</head>
+<body>
+    <h1>Formulario de Inscripción</h1>
+
+    <!-- Frase con el nombre del curso -->
+    <p id="courseText">Completá tus datos para inscribirte al curso seleccionado.</p>
+
+    <form id="inscriptionForm">
+
+        <!-- Datos automáticos -->
+        <input type="hidden" id="courseId" name="courseId" />
+        <input type="hidden" id="userId" name="userId" />
+
+        <hr>
+
+        <!-- Datos del alumno -->
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required />
+        </div>
+
+        <div>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" required />
+        </div>
+
+        <div>
+            <label for="dni">DNI / Pasaporte:</label>
+            <input type="text" id="dni" name="dni" required />
+        </div>
+
+        <div>
+            <label for="nacimiento">Fecha de nacimiento:</label>
+            <input type="date" id="nacimiento" name="nacimiento" required />
+        </div>
+
+        <div>
+            <label for="sexo">Sexo / Género:</label>
+            <select id="sexo" name="sexo" required>
+                <option value="">Seleccionar</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Masculino">Masculino</option>
+                <option value="No Binario">No Binario</option>
+                <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="estado_civil">Estado civil:</label>
+            <select id="estado_civil" name="estado_civil" required>
+                <option value="">Seleccionar</option>
+                <option value="Soltero/a">Soltero/a</option>
+                <option value="Casado/a">Casado/a</option>
+                <option value="Divorciado/a">Divorciado/a</option>
+                <option value="Viudo/a">Viudo/a</option>
+                <option value="Union convivencial">Unión convivencial</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="nacionalidad">Nacionalidad:</label>
+            <input type="text" id="nacionalidad" name="nacionalidad" required />
+        </div>
+
+        <div>
+            <label for="titulo_secundario">Título secundario obtenido:</label>
+            <input type="text" id="titulo_secundario" name="titulo_secundario" required />
+        </div>
+
+        <div>
+            <label for="domicilio">Domicilio:</label>
+            <input type="text" id="domicilio" name="domicilio" required />
+        </div>
+
+        <div>
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" name="telefono" required />
+        </div>
+
+        <div>
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" name="email" required />
+        </div>
+
+        <hr>
+
+        <button type="submit">Confirmar Inscripción</button>
+    </form>
+
+    <footer class="text-center bg-white text-secondary py-3 mt-5">
+        © 2025 - TPI Programación III
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/navbar.js"></script>
+    <script src="js/cursos.js"></script>
+
+    <script>
+        // Obtener el parámetro ?course=xxxx
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get("course");
+
+        // Relación ID → nombre visible
+        const courseNames = {
+            "html-css": "HTML & CSS",
+            "javascript-cero": "JavaScript desde Cero",
+            "python-principiantes": "Python",
+            "git-github": "Git & GitHub"
+        };
+
+        // Insertar valores
+        if (courseId) {
+            const courseName = courseNames[courseId] || "Curso";
+
+            // Guardar ID oculto
+            document.getElementById("courseId").value = courseId;
+
+            // Cambiar frase superior
+            document.getElementById("courseText").textContent =
+                `Completá tus datos para inscribirte al curso de ${courseName}.`;
+        }
+    </script>
+</body>
+</html>
