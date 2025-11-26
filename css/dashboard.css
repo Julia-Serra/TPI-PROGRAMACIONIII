@@ -1,73 +1,75 @@
-/* dashboard.css - estilos para dashboard + cursos destacados */
+/* ================================
+   ESTILOS GENERALES DEL DASHBOARD
+================================ */
 
-:root{
-  --bg:#0b0620;
-  --card:#141229;
-  --muted:#9fb4d6;
-  --accent:#c061ff;
+.dashboard-box {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-body{
-  background: var(--bg);
-  color: #e6eef8;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+.dashboard-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
 }
 
-/* dashboard-box usado por tu HTML */
-.dashboard-box{
-  background: rgba(255,255,255,0.02);
-  padding:20px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.03);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+/* TITULOS */
+.dashboard-box h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #333;
 }
 
-/* cards */
-.row.g-4 > .col-md-4 .dashboard-box{
-  min-height:120px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+/* NUMEROS GRANDES DE LAS CARDS */
+.dashboard-box p {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 10px 0 0;
+    color: #6c2bd9; /* tu color violeta */
 }
 
-/* titles / numbers */
-.dashboard-box h3{ color:#cfd9ee; margin-bottom:8px;}
-.dashboard-box p{ color:var(--accent); font-size:2rem; margin:0; font-weight:700; }
-
-/* chart */
-#chartActividad{ width:100%; height:220px; }
-
-/* Cursos destacados */
-.course-card{
-  background: rgba(255,255,255,0.02);
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.03);
-  padding:18px;
-  min-height:180px;
-  color:#e6eef8;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.55);
-}
-.course-card img{ width:64px; height:64px; object-fit:cover; }
-
-/* inscriptos line */
-.inscriptos{ margin-top:10px; font-weight:600; color:#d1d1ff; }
-.inscriptos span{ color:#ffb6ff; }
-
-/* responsive tweaks */
-@media (max-width:992px){
-  .course-card{ min-height:160px; }
-  .dashboard-box p{ font-size:1.6rem; }
-}
-.chart-container {
-    position: relative;
-    width: 100%;
-    max-width: 700px;
-    height: 320px;     /* ← evita que el canvas crezca */
-    margin: auto;
+/* CARTAS DE CURSOS DESTACADOS */
+.card {
+    background: #ffffff;
+    border-radius: 16px !important;
+    border: none !important;
+    transition: 0.2s ease;
 }
 
-.chart-container canvas {
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.card h6 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.card p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* GRAFICO */
+#graficoInscripciones {
     width: 100% !important;
     height: 100% !important;
+}
+
+/* FILTROS, TITULOS Y ESPACIADOS */
+h3 {
+    font-size: 1.4rem !important;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* CONTENEDOR DE CURSOS DESTACADOS */
+#cursosDestacados .card {
+    min-height: 140px;
 }
