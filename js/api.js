@@ -10,34 +10,34 @@ const ENROLL_URL = "https://691b92da3aaeed735c8d9d38.mockapi.io/API";
  * @param {object} opts fetch options
  */
 async function request(url, opts = {}) {
-  const defaultHeaders = { 'Content-Type': 'application/json' };
-  opts.headers = Object.assign(defaultHeaders, opts.headers || {});
-  try {
-    const res = await fetch(url, opts);
-    const text = await res.text(); // leer texto primero para manejar JSON vacio
-    const data = text ? JSON.parse(text) : null;
+    const defaultHeaders = { 'Content-Type': 'application/json' };
+    opts.headers = Object.assign(defaultHeaders, opts.headers || {});
+    try {
+        const res = await fetch(url, opts);
+        const text = await res.text(); // leer texto primero para manejar JSON vacio
+        const data = text ? JSON.parse(text) : null;
     if (!res.ok) {
       // incluir body en el error si existe
-      const errMsg = (data && data.message) ? data.message : `HTTP ${res.status}`;
-      throw new Error(errMsg);
+        const errMsg = (data && data.message) ? data.message : `HTTP ${res.status}`;
+        throw new Error(errMsg);
     }
     return data;
-  } catch (err) {
+    } catch (err) {
     // Re-lanzar para manejar más arriba (UI)
     throw err;
-  }
+    }
 }
 
 /* ---------- USERS ---------- */
 async function apiCreateUser(user) {
-  return request(`${BASE_URL}/users`, {
+    return request(`${BASE_URL}/users`, {
     method: 'POST',
     body: JSON.stringify(user)
-  });
+    });
 }
 
 async function apiGetUsers() {
-  return request(`${BASE_URL}/users`);
+    return request(`${BASE_URL}/users`);
 }
 
 /**
@@ -45,40 +45,40 @@ async function apiGetUsers() {
  * @returns user object o null
  */
 async function apiLogin(email, password) {
-  const users = await apiGetUsers();
-  return users.find(u => u.email === email && u.password === password) || null;
+    const users = await apiGetUsers();
+    return users.find(u => u.email === email && u.password === password) || null;
 }
 
 /* ---------- COURSES ---------- */
 async function apiGetCourses() {
-  return request(`${BASE_URL}/courses`);
+    return request(`${BASE_URL}/courses`);
 }
 
 async function apiCreateCourse(course) {
-  return request(`${BASE_URL}/courses`, {
+    return request(`${BASE_URL}/courses`, {
     method: 'POST',
     body: JSON.stringify(course)
-  });
+    });
 }
 
 /* ---------- ENROLLMENTS (segunda cuenta) ---------- */
 async function apiGetEnrollments() {
-  return request(`${ENROLL_URL}/enrollments`);
+    return request(`${ENROLL_URL}/enrollments`);
 }
 
 async function apiCreateEnrollment(enrollment) {
   // enrollment: { userId: "1", courseId: "2", estado: "pendiente" }
-  return request(`${ENROLL_URL}/enrollments`, {
+    return request(`${ENROLL_URL}/enrollments`, {
     method: 'POST',
     body: JSON.stringify(enrollment)
-  });
+    });
 }
 
 async function apiUpdateEnrollment(id, data) {
-  return request(`${ENROLL_URL}/enrollments/${id}`, {
+    return request(`${ENROLL_URL}/enrollments/${id}`, {
     method: 'PUT',
     body: JSON.stringify(data)
-  });
+    });
 }
 async function apiDeleteEnrollment(id) {
     return request(`${ENROLL_URL}/enrollments/${id}`, { method: 'DELETE' });
@@ -86,13 +86,13 @@ async function apiDeleteEnrollment(id) {
 
 /* Opcional: exponer en window si no usás módulos */
 window.api = {
-  apiCreateUser,
-  apiGetUsers,
-  apiLogin,
-  apiGetCourses,
-  apiCreateCourse,
-  apiGetEnrollments,
-  apiCreateEnrollment,
-  apiUpdateEnrollment,
-  apiDeleteEnrollment
+    apiCreateUser,
+    apiGetUsers,
+    apiLogin,
+    apiGetCourses,
+    apiCreateCourse,
+    apiGetEnrollments,
+    apiCreateEnrollment,
+    apiUpdateEnrollment,
+    apiDeleteEnrollment
 };
