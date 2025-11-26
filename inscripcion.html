@@ -11,88 +11,100 @@
     <!-- Frase con el nombre del curso -->
     <p id="courseText">Completá tus datos para inscribirte al curso seleccionado.</p>
 
-    <form id="inscriptionForm">
+    <form id="inscriptionForm" novalidate>
+  <div class="form-header">
+    <div>
+      <h2>Inscripción</h2>
+      <p class="muted">Completa los datos para inscribirte al curso seleccionado.</p>
+    </div>
+    <div class="form-logo">
+      <!-- si tenés un logo local: <img src="assets/img/logo-small.png" alt="logo"> -->
+      <div class="pill">Paso 1</div>
+    </div>
+  </div>
 
-        <!-- Datos automáticos -->
-        <input type="hidden" id="courseId" name="courseId" />
-        <input type="hidden" id="userId" name="userId" />
+  <div class="form-grid">
+    <div class="form-group">
+      <label for="nombre">Nombre</label>
+      <input class="form-control" type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+    </div>
 
-        <hr>
+    <div class="form-group">
+      <label for="apellido">Apellido</label>
+      <input class="form-control" type="text" id="apellido" name="apellido" required placeholder="Tu apellido">
+    </div>
 
-        <!-- Datos del alumno -->
-        <div>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required />
-        </div>
+    <div class="form-group">
+      <label for="dni">DNI / Pasaporte</label>
+      <input class="form-control" type="text" id="dni" name="dni" required placeholder="Documento">
+    </div>
 
-        <div>
-            <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" required />
-        </div>
+    <div class="form-group">
+      <label for="nacimiento">Fecha de nacimiento</label>
+      <input class="form-control" type="date" id="nacimiento" name="nacimiento" required>
+    </div>
 
-        <div>
-            <label for="dni">DNI / Pasaporte:</label>
-            <input type="text" id="dni" name="dni" required />
-        </div>
+    <div class="form-group">
+      <label for="sexo">Sexo / Género</label>
+      <select class="form-control" id="sexo" name="sexo" required>
+        <option value="">Seleccionar</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Masculino">Masculino</option>
+        <option value="No Binario">No Binario</option>
+        <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+        <option value="Otro">Otro</option>
+      </select>
+    </div>
 
-        <div>
-            <label for="nacimiento">Fecha de nacimiento:</label>
-            <input type="date" id="nacimiento" name="nacimiento" required />
-        </div>
+    <div class="form-group">
+      <label for="estado_civil">Estado civil</label>
+      <select class="form-control" id="estado_civil" name="estado_civil" required>
+        <option value="">Seleccionar</option>
+        <option value="Soltero/a">Soltero/a</option>
+        <option value="Casado/a">Casado/a</option>
+        <option value="Divorciado/a">Divorciado/a</option>
+        <option value="Viudo/a">Viudo/a</option>
+        <option value="Union convivencial">Unión convivencial</option>
+      </select>
+    </div>
 
-        <div>
-            <label for="sexo">Sexo / Género:</label>
-            <select id="sexo" name="sexo" required>
-                <option value="">Seleccionar</option>
-                <option value="Femenino">Femenino</option>
-                <option value="Masculino">Masculino</option>
-                <option value="No Binario">No Binario</option>
-                <option value="Prefiero no decirlo">Prefiero no decirlo</option>
-                <option value="Otro">Otro</option>
-            </select>
-        </div>
+    <div class="form-group full">
+      <label for="nacionalidad">Nacionalidad</label>
+      <input class="form-control" type="text" id="nacionalidad" name="nacionalidad" required placeholder="Ej: Argentina">
+    </div>
 
-        <div>
-            <label for="estado_civil">Estado civil:</label>
-            <select id="estado_civil" name="estado_civil" required>
-                <option value="">Seleccionar</option>
-                <option value="Soltero/a">Soltero/a</option>
-                <option value="Casado/a">Casado/a</option>
-                <option value="Divorciado/a">Divorciado/a</option>
-                <option value="Viudo/a">Viudo/a</option>
-                <option value="Union convivencial">Unión convivencial</option>
-            </select>
-        </div>
+    <div class="form-group full">
+      <label for="titulo_secundario">Título secundario obtenido</label>
+      <input class="form-control" type="text" id="titulo_secundario" name="titulo_secundario" required placeholder="Institución / título">
+    </div>
 
-        <div>
-            <label for="nacionalidad">Nacionalidad:</label>
-            <input type="text" id="nacionalidad" name="nacionalidad" required />
-        </div>
+    <div class="form-group full">
+      <label for="domicilio">Domicilio</label>
+      <input class="form-control" type="text" id="domicilio" name="domicilio" required placeholder="Calle, número, ciudad">
+    </div>
 
-        <div>
-            <label for="titulo_secundario">Título secundario obtenido:</label>
-            <input type="text" id="titulo_secundario" name="titulo_secundario" required />
-        </div>
+    <div class="form-group">
+      <label for="telefono">Teléfono</label>
+      <input class="form-control" type="tel" id="telefono" name="telefono" required placeholder="+54 9 ...">
+    </div>
 
-        <div>
-            <label for="domicilio">Domicilio:</label>
-            <input type="text" id="domicilio" name="domicilio" required />
-        </div>
+    <div class="form-group">
+      <label for="email">Correo electrónico</label>
+      <input class="form-control" type="email" id="email" name="email" required placeholder="tu@email.com">
+    </div>
+  </div>
 
-        <div>
-            <label for="telefono">Teléfono:</label>
-            <input type="text" id="telefono" name="telefono" required />
-        </div>
+  <!-- campos ocultos mantenidos -->
+  <input type="hidden" id="courseId" name="courseId" />
+  <input type="hidden" id="userId" name="userId" />
 
-        <div>
-            <label for="email">Correo electrónico:</label>
-            <input type="email" id="email" name="email" required />
-        </div>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Confirmar Inscripción</button>
+  </div>
 
-        <hr>
+  <div id="inscriptionAlert" class="form-alert" aria-live="polite" hidden></div>
+</form>
 
-        <button type="submit">Confirmar Inscripción</button>
-    </form>
 
     <footer class="text-center bg-white text-secondary py-3 mt-5">
         © 2025 - TPI Programación III

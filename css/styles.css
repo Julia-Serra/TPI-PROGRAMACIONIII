@@ -158,6 +158,93 @@ footer {
     
 }
 
+/* ------------ Diseño mejorado del formulario (añadir al final) ------------ */
+
+/* CABECERA DEL FORM */
+.form-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px;
+}
+.form-header h2{ margin:0; font-size:1.4rem; color:var(--text); }
+.form-header .muted{ color:var(--muted-text); margin:4px 0 0; font-size:.95rem; }
+
+.form-logo .pill{
+  background: linear-gradient(90deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:8px 12px;
+  border-radius:999px;
+  font-weight:700;
+  box-shadow: 0 6px 18px rgba(144,92,255,0.18);
+  font-size:.85rem;
+}
+
+/* GRID: dos columnas en desktop, 1 en móvil. .full ocupa toda la fila */
+.form-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:12px 18px;
+}
+.form-grid .full{ grid-column: 1 / -1; }
+
+/* Ajustes inputs (aprovechamos .form-control ya existente) */
+#inscriptionForm .form-control{
+  background: #fff;
+  color:#111;
+  border:1px solid #e5e7eb;
+  box-shadow:none;
+  font-size: .98rem;
+}
+
+/* estado de validación */
+#inscriptionForm .form-control:invalid { box-shadow: none; border-color: #ffb4b4; }
+#inscriptionForm .form-control:focus { border-color: var(--primary); }
+
+/* acciones */
+.form-actions{ margin-top:12px; display:flex; gap:10px; align-items:center; }
+
+/* alerta de envío */
+.form-alert{
+  margin-top:12px;
+  padding:10px 12px;
+  border-radius:8px;
+  font-weight:600;
+  background: rgba(16,185,129,0.12);
+  color: #10b981;
+  border: 1px solid rgba(16,185,129,0.18);
+}
+
+/* Responsivo */
+@media (max-width: 900px){
+  .form-grid{ grid-template-columns: 1fr; }
+}
+
+/* Estética extra: placeholders más suaves */
+#inscriptionForm ::placeholder { color: #9ca3af; }
+
+/* Pequeña animación al enviar */
+.btn--sending {
+  pointer-events: none;
+  transform: translateY(0);
+  opacity: .9;
+  position:relative;
+}
+.btn--sending::after{
+  content: "";
+  display:inline-block;
+  width:14px;
+  height:14px;
+  border:2px solid rgba(255,255,255,0.9);
+  border-top-color:transparent;
+  border-radius:50%;
+  margin-left:10px;
+  vertical-align:middle;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin{ to { transform: rotate(360deg); } }
+
 
 
 
