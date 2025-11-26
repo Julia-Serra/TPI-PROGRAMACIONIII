@@ -1,9 +1,3 @@
-/* ================================
-   UNIFICADO: BLOQUE A (original)
-   ================================ */
-/* ================================
-    PALETA DE COLORES PRINCIPAL
-   ================================ */
 :root {
     --primary: #c061ff;      /* color boton */
     --primary-dark: #9400FF; /* color click boton */
@@ -491,7 +485,8 @@ footer {
     background: rgba(255, 255, 255, 0.10);
     border-radius: 16px;
     padding: 22px;
-    min-height: 220px;
+    min-height: 320px;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
