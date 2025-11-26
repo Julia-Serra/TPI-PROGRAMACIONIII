@@ -1,71 +1,73 @@
-/* ==========================================
-   ESTILOS DEL DASHBOARD
-========================================== */
+/* dashboard.css - estilos para dashboard + cursos destacados */
 
-/* Contenedor de cada tarjeta */
-.dashboard-card {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    background: #ffffff;
-    padding: 22px;
-    border-radius: 16px;
-    border: 1px solid #e5e7eb;
-    transition: 
-        transform 0.18s ease,
-        box-shadow 0.18s ease,
-        border-color 0.18s ease;
+:root{
+  --bg:#0b0620;
+  --card:#141229;
+  --muted:#9fb4d6;
+  --accent:#c061ff;
 }
 
-/* Efecto hover */
-.dashboard-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    border-color: #d1d5db;
+body{
+  background: var(--bg);
+  color: #e6eef8;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
 }
 
-/* Íconos */
-.icon-box {
-    width: 60px;
-    height: 60px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
+/* dashboard-box usado por tu HTML */
+.dashboard-box{
+  background: rgba(255,255,255,0.02);
+  padding:20px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
 }
 
-/* Títulos de estadísticas */
-.dashboard-card .title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0;
-    color: #333;
+/* cards */
+.row.g-4 > .col-md-4 .dashboard-box{
+  min-height:120px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
-/* Valor principal */
-.dashboard-card .value {
-    font-size: 2rem;
-    font-weight: 700;
-    margin: 0;
-    color: var(--primary, #7a33ff);
-    line-height: 1;
+/* titles / numbers */
+.dashboard-box h3{ color:#cfd9ee; margin-bottom:8px;}
+.dashboard-box p{ color:var(--accent); font-size:2rem; margin:0; font-weight:700; }
+
+/* chart */
+#chartActividad{ width:100%; height:220px; }
+
+/* Cursos destacados */
+.course-card{
+  background: rgba(255,255,255,0.02);
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.03);
+  padding:18px;
+  min-height:180px;
+  color:#e6eef8;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.55);
+}
+.course-card img{ width:64px; height:64px; object-fit:cover; }
+
+/* inscriptos line */
+.inscriptos{ margin-top:10px; font-weight:600; color:#d1d1ff; }
+.inscriptos span{ color:#ffb6ff; }
+
+/* responsive tweaks */
+@media (max-width:992px){
+  .course-card{ min-height:160px; }
+  .dashboard-box p{ font-size:1.6rem; }
+}
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    height: 320px;     /* ← evita que el canvas crezca */
+    margin: auto;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .dashboard-card {
-        padding: 18px;
-        gap: 14px;
-    }
-
-    .icon-box {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-    }
-
-    .dashboard-card .value {
-        font-size: 1.6rem;
-    }
+.chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
