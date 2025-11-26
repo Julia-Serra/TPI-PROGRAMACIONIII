@@ -15,7 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const enrollment = {
         userId,
         courseId,
-        estado: "pendiente",
+        nombreCurso: document.getElementById("courseText").value,
+        estado: "EN_PROGRESO",
         fecha: new Date().toISOString(),
 
       // opcional: guardo los datos del formulario
@@ -37,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
         await api.apiCreateEnrollment(enrollment);  
         alert("Inscripción enviada con éxito!");
-        window.location.href = "index.html";
+        window.location.href ="user-home.html";
 
     } catch (err) {
         console.error(err);

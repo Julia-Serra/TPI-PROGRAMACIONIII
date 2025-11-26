@@ -1,48 +1,39 @@
-// =======================
-// PROTECCIÓN DE RUTA
-// =======================
+// ================
+// PROTECCIÓN
+// ================
 import { requireUser } from "./protect.js";
-
 const user = requireUser();
-if (!user) throw new Error("No autorizado");
 
-// =======================
-// MOSTRAR INFO DEL USUARIO
-// =======================
+// PERFIL
 document.getElementById("userName").textContent = user.nombre;
 document.getElementById("userEmail").textContent = user.email;
 
-// =======================
-// CARGAR INSCRIPCIONES
-// =======================
+// ================
+// Cargar Inscripciones
+// ================
 async function cargarInscripciones() {
     const cont = document.getElementById("inscripcionesList");
     cont.innerHTML = "<p>Cargando...</p>";
 
     try {
-        const inscripciones = (await api.apiGetEnrollments())
-            .filter(i => i.userId === user.id);
+        const datos = await api.apiGetEnrollments();
+        const inscripciones = datos.filter(i => i.userId === user.id);
 
         cont.innerHTML = "";
 
         if (inscripciones.length === 0) {
-            cont.innerHTML = "<p>No tenés inscripciones aún.</p>";
+            cont.innerHTML = "<p>No tenés inscripciones.</p>";
             return;
         }
 
         inscripciones.forEach(i => {
             const item = document.createElement("div");
-            item.classList.add("list-group-item");
-
-            const estadoClase =
-                i.estado === "FINALIZADO" ? "text-success fw-bold" :
-                i.estado === "EN_PROGRESO" ? "text-primary fw-bold" :
-                "text-warning fw-bold";
+            item.className = "list-group-item";
 
             item.innerHTML = `
                 <strong>${i.nombreCurso}</strong><br>
-                Estado: <span class="${estadoClase}">${i.estado}</span><br>
-                <button class="btn btn-danger btn-sm mt-2" onclick="desinscribirse('${i.id}')">
+                Estado: <strong>${i.estado}</strong>
+                <button class="btn btn-danger btn-sm mt-2 w-100 cancelar-btn" data-id="${i.id}">
                     Cancelar inscripción
                 </button>
             `;
@@ -50,38 +41,35 @@ async function cargarInscripciones() {
             cont.appendChild(item);
         });
 
-    } catch (error) {
-        console.error(error);
+        document.querySelectorAll(".cancelar-btn").forEach(btn =>
+            btn.addEventListener("click", () => desinscribirse(btn.dataset.id))
+        );
+
+    } catch {
         cont.innerHTML = "<p class='text-danger'>Error cargando inscripciones.</p>";
     }
 }
 
-// =======================
-// CANCELAR INSCRIPCIÓN
-// =======================
+// ================
+// Cancelar inscripción
+// ================
 async function desinscribirse(id) {
     if (!confirm("¿Seguro que deseas cancelar esta inscripción?")) return;
 
-    try {
-        await api.apiDeleteEnrollment(id);
-        await cargarInscripciones();
-        await cargarCursosProgreso();
-        await cargarCursosFinalizados();
-    } catch (error) {
-        alert("Error al cancelar inscripción.");
-    }
+    await api.apiDeleteEnrollment(id);
+    actualizarTodo();
 }
 
-// =======================
-// CURSOS EN PROGRESO
-// =======================
+// ================
+// Cursos en Progreso
+// ================
 async function cargarCursosProgreso() {
     const cont = document.getElementById("cursosProgreso");
     cont.innerHTML = "<p>Cargando...</p>";
 
     try {
-        const cursos = (await api.apiGetEnrollments())
-            .filter(i => i.userId === user.id && i.estado === "EN_PROGRESO");
+        const datos = await api.apiGetEnrollments();
+        const cursos = datos.filter(i => i.userId === user.id && i.estado === "EN_PROGRESO");
 
         cont.innerHTML = "";
 
@@ -92,12 +80,12 @@ async function cargarCursosProgreso() {
 
         cursos.forEach(c => {
             const item = document.createElement("div");
-            item.classList.add("list-group-item");
+            item.className = "list-group-item";
 
             item.innerHTML = `
                 <strong>${c.nombreCurso}</strong><br>
-                Avance: ${c.progreso || 0}%<br>
-                <button class="btn btn-success btn-sm mt-2" onclick="marcarFinalizado('${c.id}')">
+                Avance: ${c.progreso || 0}%
+                <button class="btn btn-success btn-sm mt-2 w-100 finalizar-btn" data-id="${c.id}">
                     Marcar como finalizado
                 </button>
             `;
@@ -105,38 +93,37 @@ async function cargarCursosProgreso() {
             cont.appendChild(item);
         });
 
-    } catch (error) {
+        document.querySelectorAll(".finalizar-btn").forEach(btn =>
+            btn.addEventListener("click", () => marcarFinalizado(btn.dataset.id))
+        );
+
+    } catch {
         cont.innerHTML = "<p class='text-danger'>Error cargando cursos.</p>";
     }
 }
 
-// =======================
-// MARCAR COMO FINALIZADO
-// =======================
+// ================
+// Marcar Finalizado
+// ================
 async function marcarFinalizado(id) {
-    try {
-        await api.apiUpdateEnrollment(id, { estado: "FINALIZADO", progreso: 100 });
+    await api.apiUpdateEnrollment(id, {
+        estado: "FINALIZADO",
+        progreso: 100
+    });
 
-        // Actualizamos todas las secciones
-        await cargarCursosProgreso();
-        await cargarCursosFinalizados();
-        await cargarInscripciones();
-
-    } catch (error) {
-        alert("Error marcando curso como finalizado.");
-    }
+    actualizarTodo();
 }
 
-// =======================
-// CURSOS FINALIZADOS
-// =======================
+// ================
+// Cursos Finalizados
+// ================
 async function cargarCursosFinalizados() {
     const cont = document.getElementById("cursosFinalizados");
     cont.innerHTML = "<p>Cargando...</p>";
 
     try {
-        const cursos = (await api.apiGetEnrollments())
-            .filter(i => i.userId === user.id && i.estado === "FINALIZADO");
+        const datos = await api.apiGetEnrollments();
+        const cursos = datos.filter(i => i.userId === user.id && i.estado === "FINALIZADO");
 
         cont.innerHTML = "";
 
@@ -147,26 +134,29 @@ async function cargarCursosFinalizados() {
 
         cursos.forEach(c => {
             const item = document.createElement("div");
-            item.classList.add("list-group-item");
+            item.className = "list-group-item";
 
             item.innerHTML = `
                 <strong>${c.nombreCurso}</strong><br>
-                <span class="text-success fw-bold">COMPLETADO ✔</span>
+                <span class="text-success fw-bold">✔ COMPLETADO</span>
             `;
 
             cont.appendChild(item);
         });
 
-    } catch (error) {
+    } catch {
         cont.innerHTML = "<p class='text-danger'>Error cargando cursos finalizados.</p>";
     }
 }
 
-// =======================
-// INICIALIZACIÓN GENERAL
-// =======================
-(async () => {
+// ================
+// Actualizar todo
+// ================
+async function actualizarTodo() {
     await cargarInscripciones();
     await cargarCursosProgreso();
     await cargarCursosFinalizados();
-})();
+}
+
+// Inicializar
+actualizarTodo();
