@@ -1,71 +1,75 @@
-/* ==========================================
-   ESTILOS DEL DASHBOARD
-========================================== */
+/* ================================
+   ESTILOS GENERALES DEL DASHBOARD
+================================ */
 
-/* Contenedor de cada tarjeta */
-.dashboard-card {
-    display: flex;
-    align-items: center;
-    gap: 18px;
+.dashboard-box {
     background: #ffffff;
-    padding: 22px;
-    border-radius: 16px;
-    border: 1px solid #e5e7eb;
-    transition: 
-        transform 0.18s ease,
-        box-shadow 0.18s ease,
-        border-color 0.18s ease;
-}
-
-/* Efecto hover */
-.dashboard-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    border-color: #d1d5db;
-}
-
-/* Íconos */
-.icon-box {
-    width: 60px;
-    height: 60px;
     border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Títulos de estadísticas */
-.dashboard-card .title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0;
+.dashboard-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* TITULOS */
+.dashboard-box h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
     color: #333;
 }
 
-/* Valor principal */
-.dashboard-card .value {
+/* NUMEROS GRANDES DE LAS CARDS */
+.dashboard-box p {
     font-size: 2rem;
-    font-weight: 700;
-    margin: 0;
-    color: var(--primary, #7a33ff);
-    line-height: 1;
+    font-weight: bold;
+    margin: 10px 0 0;
+    color: #6c2bd9; /* tu color violeta */
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .dashboard-card {
-        padding: 18px;
-        gap: 14px;
-    }
+/* CARTAS DE CURSOS DESTACADOS */
+.card {
+    background: #ffffff;
+    border-radius: 16px !important;
+    border: none !important;
+    transition: 0.2s ease;
+}
 
-    .icon-box {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-    }
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
 
-    .dashboard-card .value {
-        font-size: 1.6rem;
-    }
+.card h6 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.card p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* GRAFICO */
+#graficoInscripciones {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* FILTROS, TITULOS Y ESPACIADOS */
+h3 {
+    font-size: 1.4rem !important;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* CONTENEDOR DE CURSOS DESTACADOS */
+#cursosDestacados .card {
+    min-height: 140px;
 }

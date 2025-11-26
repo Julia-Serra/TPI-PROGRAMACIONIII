@@ -1,67 +1,82 @@
-// Esperar a que cargue la página
-document.addEventListener("DOMContentLoaded", loadDashboard);
+// Evitar gráfico infinito
+let graficoInscripcionesInstance = null;
 
-async function loadDashboard() {
+// Cursos destacados (IDs deben coincidir con tu API)
+const cursosDestacados = [
+    { id: "html-css", nombre: "HTML & CSS" },
+    { id: "javascript-cero", nombre: "JavaScript desde Cero" },
+    { id: "python", nombre: "Python" },
+    { id: "git-github", nombre: "Git & GitHub" }
+];
+
+document.addEventListener("DOMContentLoaded", iniciarDashboard);
+
+async function iniciarDashboard() {
     try {
-        // Traemos todos los datos a la vez
-        const [users, courses, enrollments] = await Promise.all([
+        const [usuarios, cursos, inscripciones] = await Promise.all([
             api.apiGetUsers(),
             api.apiGetCourses(),
             api.apiGetEnrollments()
         ]);
 
-        // ===========================
-        // CONTADORES DE LAS CARDS
-        // ===========================
-        document.getElementById("cantidadCursos").textContent = courses.length;
-        document.getElementById("cantidadUsuarios").textContent = users.length;
-        document.getElementById("cantidadInscripciones").textContent = enrollments.length;
+        // Contadores
+        document.getElementById("cantidadCursos").textContent = cursos.length;
+        document.getElementById("cantidadUsuarios").textContent = usuarios.length;
+        document.getElementById("cantidadInscripciones").textContent = inscripciones.length;
 
-        // ===========================
-        // DATOS PARA EL GRÁFICO
-        // ===========================
-        const dataGrafico = {
-            cursos: courses.length,
-            usuarios: users.length,
-            inscripciones: enrollments.length
-        };
+        // Cursos destacados
+        mostrarCursosDestacados(inscripciones);
 
-        renderChart(dataGrafico);
-
-    } catch (err) {
-        console.error("Error cargando dashboard:", err);
+    } catch (error) {
+        console.error("Error cargando dashboard:", error);
     }
 }
 
+function mostrarCursosDestacados(inscripciones) {
+    const contenedor = document.getElementById("cursosDestacados");
+    contenedor.innerHTML = "";
 
-// ===============================
-// G R Á F I C O  -  Chart.js
-// ===============================
+    const conteo = {};
 
-function renderChart(data) {
-    const ctx = document.getElementById("chartActividad").getContext("2d");
+    cursosDestacados.forEach(curso => {
+        const cantidad = inscripciones.filter(i => i.courseId === curso.id).length;
+        conteo[curso.nombre] = cantidad;
 
-    new Chart(ctx, {
+        contenedor.innerHTML += `
+            <div class="col-md-3">
+                <div class="card p-3 shadow-sm rounded-3">
+                    <h6>${curso.nombre}</h6>
+                    <p class="text-muted">ID: <strong>${curso.id}</strong></p>
+                    <p class="mb-0">Inscriptos: <strong>${cantidad}</strong></p>
+                </div>
+            </div>
+        `;
+    });
+
+    actualizarGrafico(conteo);
+}
+
+// Gráfico
+function actualizarGrafico(conteo) {
+    const ctx = document.getElementById("graficoInscripciones").getContext("2d");
+
+    if (graficoInscripcionesInstance) graficoInscripcionesInstance.destroy();
+
+    graficoInscripcionesInstance = new Chart(ctx, {
         type: "bar",
         data: {
-            labels: ["Cursos", "Usuarios", "Inscripciones"],
+            labels: Object.keys(conteo),
             datasets: [{
-                label: "Cantidad",
-                data: [data.cursos, data.usuarios, data.inscripciones],
-                backgroundColor: ["#4F46E5", "#10B981", "#F59E0B"],
-                borderRadius: 10
+                label: "Inscripciones",
+                data: Object.values(conteo),
+                borderWidth: 2
             }]
         },
         options: {
             responsive: true,
-            plugins: {
-                legend: { display: false }
-            },
+            maintainAspectRatio: false,
             scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 1 }
-                }
+                y: { beginAtZero: true }
             }
         }
     });
