@@ -407,10 +407,10 @@ footer {
 /* Contenedor general de cada tarjeta */
 .course-card {
     position: relative;
-    background: rgba(255, 255, 255, 0.10); /* Transparente suave */
+    background: rgba(255, 255, 255, 0.10);
     border-radius: 16px;
     padding: 22px;
-    min-height: 220px;              /* <--- MISMO ALTO para todas */
+    height: 320px;  /* <--- ESTA ES LA PARTE QUE CAMBIÁS */
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
@@ -431,7 +431,7 @@ footer {
     opacity: 0.9;
 }
 
-/* BOTÓN (lo dejo como ya lo tenías, no toco nada) */
+/* BOTÓN */
 .course-card .btn {
     margin-top: auto;
     width: fit-content;
@@ -483,6 +483,46 @@ footer {
     }
 }
 
+/* --- Hover grow sin mover layout --- */
+.course-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.10);
+    border-radius: 16px;
+    padding: 22px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+
+    /* performance + punto de partida */
+    transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms;
+    transform-origin: center center;
+    will-change: transform;
+}
+
+/* Elevar visualmente y escalado suave al hacer hover (solo en dispositivos con hover) */
+@media (hover: hover) and (pointer: fine) {
+  .course-card:hover {
+      transform: scale(1.06);         /* cuánto agranda — ajustá 1.04 / 1.08 si querés */
+      z-index: 30;                    /* queda por encima de las otras tarjetas */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  }
+}
+
+/* Evitar que la tarjeta 'expandida' cree scroll o se corte en su contenedor: */
+.courses-row, .courses-container { 
+    /* nombre del contenedor padre que tiene las tarjetas; reemplazá por tu selector real */
+    overflow: visible;
+}
+
+/* En móviles, desactivamos el efecto hover para evitar comportamiento extraño */
+@media (max-width: 600px) {
+    .course-card {
+        transition: none;
+        transform: none;
+    }
+}
 
 
 
